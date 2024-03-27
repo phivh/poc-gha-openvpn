@@ -15,6 +15,7 @@ jobs:
 
       - name: Setup VPN config
         run: |
+          touch vpn.log
           echo "${{ secrets.CA_CRT }}" > ca.crt
           echo "${{ secrets.USER_CRT }}" > user.crt
           echo "${{ secrets.USER_KEY }}" > user.key
