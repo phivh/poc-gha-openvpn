@@ -2,7 +2,7 @@ name: OpenVPN Workflow
 
 on: workflow_dispatch
 
-env:
+# env:
 
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
           echo "${{ secrets.SECRET_USERNAME_PASSWORD }}" > secret.txt
 
       - name: Connect VPN
-        run: sudo openvpn --config ".github/vpn/config.ovpn" --log "vpn.log" --daemon
+        run: sudo openvpn --config ".github/vpn/client.ovpn" --log "vpn.log" --daemon
 
       - name: Wait for a VPN connection
         timeout-minutes: 1
