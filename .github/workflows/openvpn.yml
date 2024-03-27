@@ -1,0 +1,27 @@
+name: OpenVPN Workflow
+
+on: workflow_dispatch
+
+jobs:
+  connect-open-vpn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install Open VPN
+        run: sudo apt-get install openvpn
+      - name: Connect VPN
+        uses: golfzaptw/action-connect-ovpn@master
+        id: connect_vpn
+        with:
+          PING_URL: "10.8.0.1"
+          FILE_OVPN: ".github/vpn/client.ovpn"
+          TLS_KEY: ${{ secrets.TLS_KEY_ENCRYPTED }}
+        env:
+          CA_CRT: ${{ secrets.CA_CRT_ENCRYPTED}}
+          USER_CRT: ${{ secrets.USER_CRT_ENCRYPTED }}
+          USER_KEY: ${{ secrets.USER_KEY_ENCRYPTED }}
+      - name: Check Connect VPN
+        run: echo ${{ steps.connect_vpn.outputs.STATUS }}
+      - name: kill vpn
+        if: always()
+        run: sudo killall openvpn
