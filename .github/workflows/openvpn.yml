@@ -31,11 +31,7 @@ jobs:
         run: until ping -c1 ${{ secrets.VPN_HOST }}; do sleep 2; done
       - name: Connect Server
         run: |
-          /usr/bin/sshpass -p "$VPN_PASSWORD" ssh $VPN_USER@$VPN_HOST "cd ~/workspace/social-generator && mkdir test-gha"
-        env:
-          VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
-          VPN_USER: ${{ secrets.VPN_USER }}
-          VPN_HOST: ${{ secrets.VPN_HOST }}
+          /usr/bin/sshpass -p ${{ secrets.VPN_PASSWORD }} ssh ${{ secrets.VPN_USER }}@${{ secrets.VPN_HOST }} "cd ~/workspace/social-generator && mkdir test-gha"
 
       - name: kill vpn
         if: always()
