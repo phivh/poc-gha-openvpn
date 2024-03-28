@@ -22,6 +22,14 @@ jobs:
           USER_KEY: ${{ secrets.USER_KEY_ENCRYPTED }}
       - name: Check Connect VPN
         run: echo ${{ steps.connect_vpn.outputs.STATUS }}
+      - name: Setup SSH
+        run: |
+          sudo apt-get update
+          sudo apt-get install sshpass
+      - name: Connect Server
+        run: |
+          /usr/bin/sshpass -p "${{ secrets.VPN_PASSWORD }}" ssh ${{ secrets.VPN_USER }}@${{ secrets.VPN_HOST }} "cd ~/workspace/social-generator && mkdir test-gha"
+
       - name: kill vpn
         if: always()
         run: sudo killall openvpn
