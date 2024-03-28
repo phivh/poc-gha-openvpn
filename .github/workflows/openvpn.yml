@@ -28,6 +28,7 @@ jobs:
           sudo apt-get install sshpass
       - name: Connect Server
         run: |
+          /usr/bin/sshpass -V
           /usr/bin/sshpass -p "${{ secrets.VPN_PASSWORD }}" ssh ${{ secrets.VPN_USER }}@${{ secrets.VPN_HOST }} "cd ~/workspace/social-generator && mkdir test-gha"
 
       - name: kill vpn
