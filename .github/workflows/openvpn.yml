@@ -26,9 +26,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install sshpass
+      - name: Wait for a VPN connection
+        timeout-minutes: 1
+        run: until ping -c1 ${{ secrets.VPN_HOST }}; do sleep 2; done
       - name: Connect Server
         run: |
-          /usr/bin/sshpass -V
           /usr/bin/sshpass -p "${{ secrets.VPN_PASSWORD }}" ssh ${{ secrets.VPN_USER }}@${{ secrets.VPN_HOST }} "cd ~/workspace/social-generator && mkdir test-gha"
 
       - name: kill vpn
