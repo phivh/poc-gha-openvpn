@@ -39,7 +39,7 @@ jobs:
           username: ${{ secrets.VPN_USER }}
           password: ${{ secrets.VPN_PASSWORD }}
           # port: ${{ secrets.PORT }}
-          script: whoami
+          script: cd ~/workspace/social-generator && mkdir test-gha
 
       - name: kill vpn
         if: always()
